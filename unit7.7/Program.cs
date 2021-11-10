@@ -7,11 +7,13 @@ namespace unit7._7_Final_task
         static void Main(string[] args)
         {
             MobilePhone mobilePhone = new MobilePhone();
-            Console.WriteLine(mobilePhone.NameProduct());
+            Console.WriteLine($"Характеристики телефона: {mobilePhone.NameProduct()}");
 
-            CasePhone casePhone = new CasePhone();
-            string m = "A50";
-            Console.WriteLine(casePhone.ChangeCase(m));
+            var casePhone = new CasePhone();
+            var caseShop = casePhone.mobilePhone.model;
+            Console.WriteLine($"Наименование чехла: {casePhone.ChangeCase(caseShop)}");
+
+
         }
     }
     abstract class Delivery
@@ -29,39 +31,36 @@ namespace unit7._7_Final_task
         {
             return "производитель:" + manufactur + "модель:" + model + "год выпуска:" + productionYear;
         }
-
-
         //public abstract void Display(); // абастрактный класс
     }
 
     class MobilePhone : Product
     {
-        private int numberSim; // число сим карт
-        private string communicationStandards; // стандарт связи
+        public int numberSim; // число сим карт
+        protected string communicationStandards; // стандарт связи
 
-
-
-        public int NumberSim // свойства
-        {
-            get
-            {
-                return NumberSim;
-            }
-            set
-            {
-                if (value <= 0 || value > 3)
-                {
-                    Console.WriteLine("Число сим карт д.б. 1 или 2");
-                }
-            }
-        }
         public MobilePhone() // конструктор
         {
             manufactur = "Samsung";
             model = "A50";
             productionYear = 2021;
-            numberSim = 1;
+            numberSim = 3;
             communicationStandards = "4G";
+        }
+        public int NumberSim // свойства
+        {
+            get
+            {
+                return numberSim;
+            }
+            set
+            {
+                if (value < 0 || value > 3)
+                {
+                    Console.WriteLine("Число сим карт д.б. 1 или 2");
+                }
+                else numberSim = value;
+            }
         }
 
         public override string NameProduct() // переопределенный метод
@@ -77,50 +76,22 @@ namespace unit7._7_Final_task
         {
             mobilePhone = new MobilePhone();
         }
-            string ChangeCase(string model)
+        public string ChangeCase(string model)
+        {
+            switch (mobilePhone.model)
             {
-                switch (mobilePhone.model)
-                {
                 case "A50":
                     return "caseModelA50";
                 case "A51":
                     return "caseModelA51";
                 case "A70":
                     return "caseModelA70";
-                }
-                return "CaseIndefined";
             }
-
+            return "CaseIndefined";
+        }
     }
 
-    //class SmartWatch : Product
-    //{
-    //    private string braceletType; // тип браслета
-    //    private int braceletSize; // размер браслета
-
-    //}
-
-    //class Computer : Product
-    //{
-    //    private string processorType; // тип процессора
-    //    private string frequencyCPU; // частота процессора
-
-    //}
-
-    //class HomeDelivery : Delivery
-    //{
-
-    //}
-
-    //class PickPointDelivery : Delivery
-    //{
-    //    /* ... */
-    //}
-
-    //class ShopDelivery : Delivery
-    //{
-    //    /* ... */
-    //}
+    class 
 
     class Order<TDelivery, TMobilePhone, TCasePhone> 
         where TDelivery : Delivery
@@ -145,12 +116,5 @@ namespace unit7._7_Final_task
         {
             Console.WriteLine("Товар: " + MobilePhone.NameProduct());
         }
-
-        public void DisplayCasePhone()
-        {
-            Console.WriteLine("Товар: " + CasePhone.ChangeCase(MobilePhone.model));
-        }
-
-
     }
 }
