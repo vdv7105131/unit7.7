@@ -91,7 +91,7 @@ namespace unit7._7_Final_task
         }
     }
 
-    class 
+    
 
     class Order<TDelivery, TMobilePhone, TCasePhone> 
         where TDelivery : Delivery
@@ -107,9 +107,9 @@ namespace unit7._7_Final_task
 
         public string Description;
 
-        public void DisplayAddress()
+        public void DisplayAddress(TDelivery Delivery)
         {
-            Console.WriteLine("Адрес доставки" + Delivery.Address);
+            Console.WriteLine("Адрес доставки" + Delivery);
         }
 
         public void DisplayProduct()
